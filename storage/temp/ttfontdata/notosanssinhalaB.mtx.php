@@ -1,0 +1,37 @@
+<?php
+$name='NotoSansSinhala-Bold';
+$type='TTF';
+$desc=array (
+  'CapHeight' => 612.0,
+  'XHeight' => 536.0,
+  'FontBBox' => '[-1021 -271 1938 979]',
+  'Flags' => 262148,
+  'Ascent' => 979.0,
+  'Descent' => -271.0,
+  'Leading' => 0.0,
+  'ItalicAngle' => 0.0,
+  'StemV' => 165.0,
+  'MissingWidth' => 600.0,
+);
+$unitsPerEm=1000;
+$up=-100;
+$ut=50;
+$strp=322;
+$strs=50;
+$ttffile='D:\xampp\htdocs\techspasehrm\public\fonts/NotoSansSinhala-Bold.ttf';
+$TTCfontID='0';
+$originalsize=342464;
+$sip=false;
+$smp=true;
+$BMPselected=false;
+$fontkey='notosanssinhalaB';
+$panose=' 0 0 2 b 8 2 4 5 4 2 2 4';
+$haskerninfo=false;
+$haskernGPOS=false;
+$hassmallcapsGSUB=false;
+$fontmetrics='win';
+// TypoAscender/TypoDescender/TypoLineGap = 1011, -293, 0
+// usWinAscent/usWinDescent = 1011, -293
+// hhea Ascent/Descent/LineGap = 1011, -293, 0
+$useOTL=0x0000;
+$rtlPUAstr='';
