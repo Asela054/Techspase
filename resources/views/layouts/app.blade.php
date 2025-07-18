@@ -8,13 +8,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title><?= (isset($page_stitle)) ? $page_stitle : ' ShapeUP HRM- By Erav Technology' ?></title>
-    <link rel="icon" type="image/x-icon" href="{{url('/public/images/hrm.png')}}" /> 
+    <link rel="icon" type="image/x-icon" href="{{url('/images/hrm.png')}}" /> 
     <!-- Styles -->
-    <link href="{{ url('/public/css/styles.css') }}" rel="stylesheet"/>
-    <link href="{{ url('/public/css/custom_styles.css') }}" rel="stylesheet"/>
-    <link href="{{ url('/public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
-    <link href="{{ url('/public/css/full_calendar.min.css') }}" rel="stylesheet"/>
-    <link href="{{ url('/public/css/font/flaticon.css') }}" rel="stylesheet"/>
+    <link href="{{ url('/css/styles.css') }}" rel="stylesheet"/>
+    <link href="{{ url('/css/custom_styles.css') }}" rel="stylesheet"/>
+    <link href="{{ url('/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url('/css/full_calendar.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url('/css/font/flaticon.css') }}" rel="stylesheet"/>
 
     <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 <!--link href="{{ asset('css/app.css') }}" rel="stylesheet"-->
@@ -109,13 +109,13 @@
                            href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                            <!-- <img class="img-fluid" src="/images/{{ \App\EmployeePicture::where(['emp_id' =>  $empid=Auth::user()->emp_id ])->pluck('emp_pic_filename')->first() }}"/> -->
-                           <img class="img-fluid" src="{{url('/public/images/user-profile.png')}}"/>
+                           <img class="img-fluid" src="{{url('/images/user-profile.png')}}"/>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
                              aria-labelledby="navbarDropdownUserImage">
                             <h6 class="dropdown-header d-flex align-items-center">
                                 <img class="dropdown-user-img"
-                                     src="{{url('/public/images/user-profile.png')}}"/>
+                                     src="{{url('/images/user-profile.png')}}"/>
                                 <div class="dropdown-user-details">
                                     <div class="dropdown-user-details-name"> {{ Auth::user()->name }}</div>
                                     <div class="dropdown-user-details-email">{{ Auth::user()->email }}</div>
@@ -167,14 +167,14 @@
         </div>
     </div>
 <!-- Scripts -->
-<script src="{{ url('/public/js/app.js') }}"></script>
-<script src="{{ url('/public/js/jquery-3.4.1.min.js') }}"></script>
-<script src="{{ url('/public/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ url('/public/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ url('/public/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ url('/public/js/scripts.js') }}"></script>
-<script src="{{ url('/public/js/moment.js') }}"></script>
-<script src="{{ url('/public/js/bootstrap-datetimepicker.js') }}"></script>
+<script src="{{ url('/js/app.js') }}"></script>
+<script src="{{ url('/js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ url('/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url('/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url('/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url('/js/scripts.js') }}"></script>
+<script src="{{ url('/js/moment.js') }}"></script>
+<script src="{{ url('/js/bootstrap-datetimepicker.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 
 <!--script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
@@ -198,8 +198,8 @@
 <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="{{ url('/public/js/jspdf.umd.js') }}"></script>
-<script src="{{ url('/public/js/jspdf.plugin.autotable.min.js') }}"></script>
+<script src="{{ url('/js/jspdf.umd.js') }}"></script>
+<script src="{{ url('/js/jspdf.plugin.autotable.min.js') }}"></script>
 <script>
     $(function () {
         function toggleSidebar() {
