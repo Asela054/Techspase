@@ -242,9 +242,6 @@ Route::get('late_attendance/destroy/{id}', 'AttendanceController@destroy_late_at
 Route::post('Attendance.delete', 'AttendanceController@delete')->name('Attendance.delete');
 
 
-//incomplete_attendances
-Route::get('incomplete_attendances',['uses' => 'AttendanceController@incomplete_attendances', 'as' => 'incomplete_attendances']);
-
 Route::get('attendance_by_time_report_list',['uses' => 'AttendanceController@attendance_by_time_report_list', 'as' => 'attendance_by_time_report_list']);
 Route::post('lateAttendance_mark_as_late',['uses' => 'AttendanceController@lateAttendance_mark_as_late', 'as' => 'lateAttendance_mark_as_late']);
 
@@ -283,9 +280,6 @@ Route::post('/AttendentDeleteLive', 'AttendanceController@attendentdeletelive');
 Route::get('/getAttendentChart', 'AttendanceController@getAttendentChart');
 Route::get('/getBranchAttendentChart', 'AttendanceController@getBranchAttendentChart');
 Route::get('/Attendentdetails/{id}/{date}',['uses' => 'AttendanceController@attendentdetails', 'as' => 'Attendentdetails']);
-
-//get_incomplete_attendance_by_employee_data
-Route::post('get_incomplete_attendance_by_employee_data', 'AttendanceController@get_incomplete_attendance_by_employee_data')->name('get_incomplete_attendance_by_employee_data');
 
 //mark_as_no_pay
 Route::post('mark_as_no_pay', 'AttendanceController@mark_as_no_pay')->name('mark_as_no_pay');
@@ -1428,3 +1422,8 @@ Route::get('/nightshiftreport', 'NightShiftReportController@nightshiftreport')->
 Route::get('/shift_extend_report_list', 'ShiftExtendReportController@shift_extend_report_list')->name('shift_extend_report_list');
 Route::get('/shiftextendreport', 'ShiftExtendReportController@shiftextendreport')->name('shiftextendreport'); 
 
+
+//incomplete_attendances Controller
+Route::get('incomplete_attendances',['uses' => 'IncompleteAttendanceController@incomplete_attendances', 'as' => 'incomplete_attendances']);
+Route::post('get_incomplete_attendance_by_employee_data', 'IncompleteAttendanceController@get_incomplete_attendance_by_employee_data')->name('get_incomplete_attendance_by_employee_data');
+Route::post('update_incomplete_attendace', 'IncompleteAttendanceController@update_attendace')->name('update_incomplete_attendace');
