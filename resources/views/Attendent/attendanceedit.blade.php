@@ -725,11 +725,11 @@
                                             '</button> ';
                                 }
 
-                                if (canEditEmployee) {
-                                    button += '<button type="button" class="btn btn-outline-primary btn-sm edit_button" data-uid="'+ uid + '" data-date="' + date + '" data-name="' + emp_name + '" title="Edit">' +
-                                            '<i class="fas fa-pencil-alt"></i>' +
-                                            '</button> ';
-                                }
+                            //    if (canEditEmployee) {
+                            //        button += '<button type="button" class="btn btn-outline-primary btn-sm edit_button" data-uid="'+ uid + '" data-date="' + date + '" data-name="' + emp_name + '" title="Edit">' +
+                            //                '<i class="fas fa-pencil-alt"></i>' +
+                            //                '</button> ';
+                            //    }
 
                                 if (canDeleteEmployee) {
                                     button += '<button type="button" class="btn btn-outline-danger btn-sm delete_button" data-uid="' + uid + '" data-date="' + date + '" data-name="' + emp_name + '" title="Delete">' +

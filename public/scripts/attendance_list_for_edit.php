@@ -45,6 +45,10 @@ if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
     $from_date = $_POST['from_date'];
     $to_date = $_POST['to_date'];
     $extraWhere .= " AND `sub`.`date` BETWEEN '$from_date' AND '$to_date'";
+}else {
+    $threeWeeksAgo = date('Y-m-d', strtotime('-3 weeks'));
+    $today = date('Y-m-d');
+    $extraWhere .= " AND `sub`.`date` BETWEEN '$threeWeeksAgo' AND '$today'";
 }
 
 $joinQuery = "FROM (

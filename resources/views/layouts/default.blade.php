@@ -7,10 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>  ShapeUP HRM - By eRav Technology</title>
-    <link rel="icon" type="image/x-icon" href="{{url('/public/images/hrm.png')}}" />
+    <link rel="icon" type="image/x-icon" href="{{url('/images/hrm.png')}}" />
     <!-- Styles -->
-    <link href="{{ url('/public/css/styles.css') }}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="{{url('/public/images/hrm.png')}}" />
+    <link href="{{ url('/css/styles.css') }}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{{url('/images/hrm.png')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .bg-laugfs {
@@ -69,6 +69,6 @@
         @yield('content')
     </div>
     <!-- Scripts -->
-    <script src="{{ url('/public/js/app.js') }}"></script>
+    <script src="{{ url('/js/app.js') }}"></script>
 </body>
 </html>
