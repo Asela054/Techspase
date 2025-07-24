@@ -17,6 +17,7 @@ use App\LateAttendance;
 use App\Leave;
 use App\LeaveDetail;
 use App\OtApproved;
+use App\AttendanceInsert;
 use App\Shift;
 use App\ShiftType;
 use Carbon\CarbonPeriod;
@@ -4310,6 +4311,236 @@ class AttendanceController extends Controller
             ->make(true);
     }
 
+    // public function attendance_upload_txt_submit(Request $request)
+    // {
+    //     $user = Auth::user();
+    //     $permission = $user->can('attendance-edit');
+    //     if (!$permission) {
+    //         return response()->json(['error' => 'UnAuthorized'], 401);
+    //     }
+
+    //     $date_input = $request->date;
+    //     $machine = $request->machine;
+    //     $txt_file_u = $request->txt_file_u;
+
+    //     $content = fopen($txt_file_u,'r');
+
+    //     $data = array();
+      
+    //     while(!feof($content)){
+    //         $line = fgets($content);
+    //         $line = trim($line);
+    //         $parts = preg_split('/\s+/', $line);
+
+    //         if (count($parts) < 3) {
+    //             continue;
+    //         }
+
+    //         $timestamptxt = $parts[1] . ' ' . $parts[2];  
+    //         $attendancetime = Carbon::parse($timestamptxt);
+    //         $date = $attendancetime->format('Y-m-d');
+    //         $time = $attendancetime->format('H:i:s');
+    //         $timestamp = $attendancetime->format('Y-m-d H:i:s');
+
+    //         if($parts[1]==$date_input){
+    //             $obj = array(
+    //                 'emp_id' => $parts[0],
+    //                 'attdate' => $date,
+    //                 'atttime' => $time,
+    //                 'timestamp' => $timestamp
+    //             );
+    //             array_push($data, $obj);
+    //         }
+    //     }
+    //     fclose($content);
+
+    //     foreach($data as $datalist){
+    //         $befordate = Carbon::parse($datalist['attdate'])->subDay()->format('Y-m-d');
+    //         $attendancedate = $datalist['attdate'];
+    //         $attendancetime = $datalist['atttime'];
+    //         $timestamp = Carbon::parse($datalist['timestamp']);
+    //         $emp_id = $datalist['emp_id'];
+
+    //         $empnightshiftcheck = DB::table('employees')
+    //             ->select('emp_shift')
+    //             ->where('emp_id', $emp_id)
+    //             ->first();
+
+    //         if($empnightshiftcheck && $empnightshiftcheck->emp_shift==2){
+    //             if($timestamp->format('A')==='AM'){
+    //                 $befordaycheck = DB::table('attendances')
+    //                     ->whereDate('date', $befordate)
+    //                     ->whereDate('timestamp', $befordate)
+    //                     ->where('emp_id', $emp_id)
+    //                     ->first();
+    //                 if(!empty($befordaycheck)){
+    //                     $attendancedate = $befordate;
+    //                 }
+    //                 else{
+    //                     $newdatacheck = DB::table('attendances')
+    //                         ->where('emp_id', $emp_id)
+    //                         ->first();
+    //                     if(empty($newdatacheck)){
+    //                         $attendancedate = $befordate;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         else{
+    //             $nightshiftcheck = DB::table('employeeshiftdetails')
+    //                 ->whereDate('date_from', '<=', $befordate)
+    //                 ->whereDate('date_to', '>=', $befordate)
+    //                 ->where('emp_id', $emp_id)
+    //                 ->first();
+                
+    //             if($nightshiftcheck){
+    //                 $befordaycheck = DB::table('attendances')
+    //                     ->whereDate('date', $befordate)
+    //                     ->whereDate('timestamp', $attendancedate)
+    //                     ->where('emp_id', $emp_id)
+    //                     ->first();
+    //                 if(empty($befordaycheck)){
+    //                     $attendancedate = $befordate;
+    //                 } 
+    //             }
+    //             else{
+    //                 $shiftextendcheck = DB::table('shift_extenddetails')
+    //                     ->whereDate('date', $befordate)
+    //                     ->where('emp_id', $emp_id)
+    //                     ->where('status',1)
+    //                     ->first();
+
+    //                 if($shiftextendcheck){
+
+    //                     $befordaycheck = DB::table('attendances')
+    //                         ->whereDate('date', $befordate)
+    //                         ->whereDate('timestamp', $attendancedate)
+    //                         ->where('emp_id', $emp_id)
+    //                         ->first();
+
+    //                     if(empty($befordaycheck)){
+
+    //                          if (empty($befordaycheck)) {
+    //                                 $hour = $timestamp->hour;
+    //                                 if ($timestamp->format('A') === 'AM' && $hour >= 0 && $hour < 8) {
+    //                                     $attendancedate = $befordate;
+    //                                 }
+    //                             }
+    //                     }
+    //                 }
+    //             }
+    //         }
+
+    //         // echo $emp_id.'-->'.$attendancedate.'-->'.$timestamp.'<br>';
+    //         $Attendance = Attendance::firstOrNew(['timestamp' => $timestamp, 'emp_id' => $emp_id]);
+    //         $Attendance->uid = $emp_id;
+    //         $Attendance->emp_id = $emp_id;
+    //         $Attendance->timestamp = $timestamp;
+    //         $Attendance->date = $attendancedate;
+    //         $Attendance->location = 1;
+    //         $is_ok = $Attendance->save();
+    //     }
+
+    //     return response()->json(['status' => true, 'msg' => 'Updated successfully.']);
+
+
+    //     // foreach ($unique_arr as $line){
+    //     //     if($machine==1){
+    //     //         $parts = preg_split('/\s+/', $line);
+
+    //     //         if (count($parts) < 3) {
+    //     //             continue; // Skip lines that don't have enough parts
+    //     //         }
+
+    //     //         $emp_id = trim($parts[0]);
+    //     //         $timestamp = trim($parts[1]) . ' ' . trim($parts[2]); 
+
+    //     //         $carbonDate = Carbon::parse($timestamp);
+    //     //         $date = $carbonDate->format('Y-m-d');
+    //     //         $time = $carbonDate->format('H:i:s');
+
+    //     //         if($date_input==$date){
+    //     //             $ob = array(
+    //     //                 'emp_id' => $emp_id,
+    //     //                 'attdate' => $date,
+    //     //                 'atttime' => $time,
+    //     //             );
+
+    //     //             array_push($attendancedata, $ob);
+    //     //         }
+    //     //     }
+    //     // }
+    //     // print_r($attendancedata);
+
+    //         // $emp = DB::table('employees')
+    //         // ->select('emp_id', 'emp_shift')
+    //         // ->where('emp_id', $emp_id)
+    //         // ->first();
+
+    //         // if (is_null($emp)) {
+    //         //     continue;
+    //         // }
+
+
+    //         // $employeeshiftdetails = DB::table('employeeshiftdetails')
+    //         //     ->whereDate('date_from', '<=', $date)
+    //         //     ->whereDate('date_to', '>=', $date)
+    //         //     ->where('emp_id', $emp_id)
+    //         //     ->first();
+
+    //         //     $period = (new DateTime($time))->format('A');
+    //         //     $attendance_date = $date;
+
+
+    //         //     if($employeeshiftdetails){
+    //         //         // If time is before 12:00 PM, subtract one day from the date
+    //         //         if ($period === 'AM') {
+    //         //             $attendance_date = Carbon::parse($date)->subDay()->format('Y-m-d');
+    //         //         } else {
+
+    //         //             $attendance_date = $date;
+
+    //         //            // Check that employee shift has extended
+    //         //             $employeeshiftextend = DB::table('shift_extenddetails')
+    //         //             ->whereDate('date', $date)
+    //         //             ->where('emp_id', $emp_id)
+    //         //             ->where('status',1)
+    //         //             ->first();
+    //         //             if($employeeshiftextend){
+    //         //                  // if shift has extended substract a day from attendace date
+    //         //                 $attendance_date = Carbon::parse($date)->subDay()->format('Y-m-d');
+    //         //             }else{
+    //         //                 $attendance_date = $date;
+    //         //             }
+
+    //         //         }
+                    
+    //         //     }else{
+    //         //         $employeeshiftextend = DB::table('shift_extenddetails')
+    //         //         ->whereDate('date', $date)
+    //         //         ->where('emp_id', $emp_id)
+    //         //         ->where('status',1)
+    //         //         ->first();
+
+    //         //         if($employeeshiftextend){
+
+    //         //             $attendance_date = Carbon::parse($date)->subDay()->format('Y-m-d');
+    //         //         }
+    //         //     }
+                
+    //         //     if($date == $date_input){
+    //         //         $Attendance = Attendance::firstOrNew(['timestamp' => $timestamp, 'emp_id' => $emp_id]);
+    //         //         $Attendance->uid = $emp_id;
+    //         //         $Attendance->emp_id = $emp_id;
+    //         //         $Attendance->timestamp = $timestamp;
+    //         //         $Attendance->date = $attendance_date;
+    //         //         $Attendance->location = 1;
+    //         //         $is_ok = $Attendance->save();
+    //         //     }    
+        
+    //     // return response()->json(['status' => true, 'msg' => 'Updated successfully.']);
+
+    // }
     public function attendance_upload_txt_submit(Request $request)
     {
         $user = Auth::user();
@@ -4353,193 +4584,70 @@ class AttendanceController extends Controller
         }
         fclose($content);
 
-        foreach($data as $datalist){
-            $befordate = Carbon::parse($datalist['attdate'])->subDay()->format('Y-m-d');
-            $attendancedate = $datalist['attdate'];
-            $attendancetime = $datalist['atttime'];
-            $timestamp = Carbon::parse($datalist['timestamp']);
-            $emp_id = $datalist['emp_id'];
+        $priviousdate = Carbon::parse($date_input)->subDay()->format('Y-m-d');
 
-            $empnightshiftcheck = DB::table('employees')
-                ->select('emp_shift')
-                ->where('emp_id', $emp_id)
-                ->first();
+        $dayshifttime = DB::table('shift_types')
+            ->select('onduty_time')
+            ->where('id',3)
+            ->first();
 
-            if($empnightshiftcheck && $empnightshiftcheck->emp_shift==2){
-                if($timestamp->format('A')==='AM'){
-                    $befordaycheck = DB::table('attendances')
-                        ->whereDate('date', $befordate)
-                        ->whereDate('timestamp', $befordate)
-                        ->where('emp_id', $emp_id)
-                        ->first();
-                    if(!empty($befordaycheck)){
-                        $attendancedate = $befordate;
-                    }
-                    else{
-                        $newdatacheck = DB::table('attendances')
-                            ->where('emp_id', $emp_id)
-                            ->first();
-                        if(empty($newdatacheck)){
-                            $attendancedate = $befordate;
-                        }
-                    }
-                }
+        $dayshiftonduty = $dayshifttime->onduty_time;
+
+        $nightshiftemployees = DB::table('employeeshiftdetails')
+            ->whereDate('date_from', '<=', $priviousdate)
+            ->whereDate('date_to', '>=', $priviousdate)
+            ->pluck('emp_id')
+            ->toArray();
+        
+        $shiftextendemployee = DB::table('shift_extenddetails')
+            ->whereDate('date', $priviousdate)
+            ->where('status',1)
+            ->pluck('emp_id')
+            ->toArray();
+        
+        $generalnightshiftemployee = DB::table('employees')
+            ->where('emp_shift', 2)
+            ->pluck('emp_id')
+            ->toArray();
+
+
+        $nightshiftRecords = [];
+        $extendedShiftRecords = [];
+        $generalNightshiftRecords = [];
+        $generaldaysshifftRecords = [];     
+
+        // Convert the ID arrays to associative arrays for faster lookup
+        $nightshiftLookup = array_flip($nightshiftemployees);
+        $extendedShiftLookup = array_flip($shiftextendemployee);
+        $generalNightshiftLookup = array_flip($generalnightshiftemployee);
+        
+        foreach ($data as $record) {
+            $empId = $record['emp_id'];
+            
+            if (isset($nightshiftLookup[$empId])) {
+                $nightshiftRecords[] = $record;
+            } elseif (isset($extendedShiftLookup[$empId])) {
+                $extendedShiftRecords[] = $record;
+            } elseif (isset($generalNightshiftLookup[$empId])) {
+                $generalNightshiftRecords[] = $record;
+            } else {
+                $generaldaysshifftRecords[] = $record;
             }
-            else{
-                $nightshiftcheck = DB::table('employeeshiftdetails')
-                    ->whereDate('date_from', '<=', $befordate)
-                    ->whereDate('date_to', '>=', $befordate)
-                    ->where('emp_id', $emp_id)
-                    ->first();
-                
-                if($nightshiftcheck){
-                    $befordaycheck = DB::table('attendances')
-                        ->whereDate('date', $befordate)
-                        ->whereDate('timestamp', $attendancedate)
-                        ->where('emp_id', $emp_id)
-                        ->first();
-                    if(empty($befordaycheck)){
-                        $attendancedate = $befordate;
-                    } 
-                }
-                else{
-                    $shiftextendcheck = DB::table('shift_extenddetails')
-                        ->whereDate('date', $befordate)
-                        ->where('emp_id', $emp_id)
-                        ->where('status',1)
-                        ->first();
-
-                    if($shiftextendcheck){
-
-                        $befordaycheck = DB::table('attendances')
-                            ->whereDate('date', $befordate)
-                            ->whereDate('timestamp', $attendancedate)
-                            ->where('emp_id', $emp_id)
-                            ->first();
-
-                        if(empty($befordaycheck)){
-
-                             if (empty($befordaycheck)) {
-                                    $hour = $timestamp->hour;
-                                    if ($timestamp->format('A') === 'AM' && $hour >= 0 && $hour < 8) {
-                                        $attendancedate = $befordate;
-                                    }
-                                }
-                        }
-                    }
-                }
-            }
-
-            // echo $emp_id.'-->'.$attendancedate.'-->'.$timestamp.'<br>';
-            $Attendance = Attendance::firstOrNew(['timestamp' => $timestamp, 'emp_id' => $emp_id]);
-            $Attendance->uid = $emp_id;
-            $Attendance->emp_id = $emp_id;
-            $Attendance->timestamp = $timestamp;
-            $Attendance->date = $attendancedate;
-            $Attendance->location = 1;
-            $is_ok = $Attendance->save();
         }
+        
+        $attendanceInsertModel = new AttendanceInsert();
+
+        // Pass each array to its corresponding function
+        $attendanceInsertModel->Nightshiftempoyee_insert($nightshiftRecords, $priviousdate, $dayshiftonduty);
+        $attendanceInsertModel->ExtendedShiftemployee_insert($extendedShiftRecords, $priviousdate, $dayshiftonduty);
+        $attendanceInsertModel->GeneralNightshiftemployee_insert($generalNightshiftRecords, $priviousdate);
+        $attendanceInsertModel->GeneralDayshiftemployee_insert($generaldaysshifftRecords, $priviousdate);
+
 
         return response()->json(['status' => true, 'msg' => 'Updated successfully.']);
 
-
-        // foreach ($unique_arr as $line){
-        //     if($machine==1){
-        //         $parts = preg_split('/\s+/', $line);
-
-        //         if (count($parts) < 3) {
-        //             continue; // Skip lines that don't have enough parts
-        //         }
-
-        //         $emp_id = trim($parts[0]);
-        //         $timestamp = trim($parts[1]) . ' ' . trim($parts[2]); 
-
-        //         $carbonDate = Carbon::parse($timestamp);
-        //         $date = $carbonDate->format('Y-m-d');
-        //         $time = $carbonDate->format('H:i:s');
-
-        //         if($date_input==$date){
-        //             $ob = array(
-        //                 'emp_id' => $emp_id,
-        //                 'attdate' => $date,
-        //                 'atttime' => $time,
-        //             );
-
-        //             array_push($attendancedata, $ob);
-        //         }
-        //     }
-        // }
-        // print_r($attendancedata);
-
-            // $emp = DB::table('employees')
-            // ->select('emp_id', 'emp_shift')
-            // ->where('emp_id', $emp_id)
-            // ->first();
-
-            // if (is_null($emp)) {
-            //     continue;
-            // }
-
-
-            // $employeeshiftdetails = DB::table('employeeshiftdetails')
-            //     ->whereDate('date_from', '<=', $date)
-            //     ->whereDate('date_to', '>=', $date)
-            //     ->where('emp_id', $emp_id)
-            //     ->first();
-
-            //     $period = (new DateTime($time))->format('A');
-            //     $attendance_date = $date;
-
-
-            //     if($employeeshiftdetails){
-            //         // If time is before 12:00 PM, subtract one day from the date
-            //         if ($period === 'AM') {
-            //             $attendance_date = Carbon::parse($date)->subDay()->format('Y-m-d');
-            //         } else {
-
-            //             $attendance_date = $date;
-
-            //            // Check that employee shift has extended
-            //             $employeeshiftextend = DB::table('shift_extenddetails')
-            //             ->whereDate('date', $date)
-            //             ->where('emp_id', $emp_id)
-            //             ->where('status',1)
-            //             ->first();
-            //             if($employeeshiftextend){
-            //                  // if shift has extended substract a day from attendace date
-            //                 $attendance_date = Carbon::parse($date)->subDay()->format('Y-m-d');
-            //             }else{
-            //                 $attendance_date = $date;
-            //             }
-
-            //         }
-                    
-            //     }else{
-            //         $employeeshiftextend = DB::table('shift_extenddetails')
-            //         ->whereDate('date', $date)
-            //         ->where('emp_id', $emp_id)
-            //         ->where('status',1)
-            //         ->first();
-
-            //         if($employeeshiftextend){
-
-            //             $attendance_date = Carbon::parse($date)->subDay()->format('Y-m-d');
-            //         }
-            //     }
-                
-            //     if($date == $date_input){
-            //         $Attendance = Attendance::firstOrNew(['timestamp' => $timestamp, 'emp_id' => $emp_id]);
-            //         $Attendance->uid = $emp_id;
-            //         $Attendance->emp_id = $emp_id;
-            //         $Attendance->timestamp = $timestamp;
-            //         $Attendance->date = $attendance_date;
-            //         $Attendance->location = 1;
-            //         $is_ok = $Attendance->save();
-            //     }    
-        
-        // return response()->json(['status' => true, 'msg' => 'Updated successfully.']);
-
     }
+
 
     public function autoattedance()
     {
