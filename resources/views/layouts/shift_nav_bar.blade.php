@@ -1,55 +1,61 @@
-
 <div class="row nowrap" style="padding-top: 5px;padding-bottom: 5px;">
+  @php
+    $user = auth()->user();
+    $hasShiftPermissions = $user->can('shift-list') || 
+                         $user->can('work-shift-list') || 
+                         $user->can('additional-shift-list') ||
+                         $user->can('employee-shift-allocation-list') ||
+                         $user->can('employee-ot-allocation-list') ||
+                         $user->can('employee-shift-extend-list');
+  @endphp
 
-  @if(auth()->user()->can('shift-list')
-  || auth()->user()->can('work-shift-list')
-  || auth()->user()->can('additional-shift-list'))
+  @if($hasShiftPermissions)
       <div class="dropdown">
-        @can('shift-list')
+        @if($user->can('shift-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('Shift') }}" id="shift_link">Employee Shifts <span class="caret"></span></a>
-        @endcan
-        @can('work-shift-list')
+        @endif
+        @if($user->can('work-shift-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('ShiftType') }}" id="work_shift_link">Work Shifts <span class="caret"></span></a>
-        @endcan
-        @can('additional-shift-list')
+        @endif
+        @if($user->can('additional-shift-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('AdditionalShift.index') }}" id="additional_shift_link">Additional Shifts <span class="caret"></span></a>
-        @endcan
+        @endif
 
-        @can('employee-shift-allocation-list')
+        @if($user->can('employee-shift-allocation-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('employeeshift') }}" id="employeeshift_link">Employee Night Shift Assign <span class="caret"></span></a>
-        @endcan
+        @endif
 
-        @can('employee-ot-allocation-list')
+        @if($user->can('employee-ot-allocation-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('employeeot') }}" id="employeeot_link">Employee OT Allocation Assign <span class="caret"></span></a>
-        @endcan
+        @endif
 
-        @can('employee-shift-extend-list')
+        @if($user->can('employee-shift-extend-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('empshiftextend') }}" id="employeeshift_extend_link">Employee Shift Extend Assign <span class="caret"></span></a>
-        @endcan
-
+        @endif
       </div>
   @endif
 
-  @if(auth()->user()->can('transport-route-list')
-  || auth()->user()->can('transport-vehicle-list')
-  || auth()->user()->can('transport-allocation-list'))
+  @php
+    $hasTransportPermissions = $user->can('transport-route-list') ||
+                             $user->can('transport-vehicle-list') ||
+                             $user->can('transport-allocation-list');
+  @endphp
+
+  @if($hasTransportPermissions)
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="transport_link">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="transport_link">
       Transport Management <span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-          @can('transport-route-list')
+          @if($user->can('transport-route-list'))
             <li><a class="dropdown-item" href="{{ route('TransportRoute')}}">Transport Route</a></li>
-            @endcan
-          @can('transport-vehicle-list')
+          @endif
+          @if($user->can('transport-vehicle-list'))
             <li><a class="dropdown-item" href="{{ route('TransportVehicle')}}">Transport Vehicle</a></li>
-            @endcan
-          @can('transport-allocation-list')
+          @endif
+          @if($user->can('transport-allocation-list'))
             <li><a class="dropdown-item" href="{{ route('TransportAllocation')}}">Transport Allocation</a></li>
-            @endcan
+          @endif
         </ul>
   </div>
   @endif
-
 </div>
-
-

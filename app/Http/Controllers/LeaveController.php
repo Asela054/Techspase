@@ -33,7 +33,7 @@ class LeaveController extends Controller
         }
 
         $leavetype = LeaveType::whereBetween('id', [1, 6])->orderBy('id', 'asc')->get();
-        $employee = Employee::orderBy('id', 'desc')->get();
+        // $employee = Employee::orderBy('id', 'desc')->get();
 
         return view('Leave.leaveapply', compact('leavetype', 'employee'));
     }
