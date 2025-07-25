@@ -1,143 +1,145 @@
-
 <div class="row nowrap" style="padding-top: 5px;padding-bottom: 5px;">
+  @php
+    $user = auth()->user();
+    $hasPolicyPermissions = $user->can('Facilities-list') || 
+                          $user->can('Payrollprofile-list') ||
+                          $user->can('Loans-list') || 
+                          $user->can('Loans-Settlement-list') ||
+                          $user->can('Salaryaddition-list') || 
+                          $user->can('Other-facilities-list') ||
+                          $user->can('Salary-increment-list') || 
+                          $user->can('Work-summary-list') ||
+                          $user->can('Salary-preperation-list') || 
+                          $user->can('Salary-schedule-list') ||
+                          $user->can('Paysliplist-list');
+  @endphp
 
-  @if(auth()->user()->can('Facilities-list') 
-            || auth()->user()->can('Payrollprofile-list')
-            || auth()->user()->can('Loans-list') 
-            || auth()->user()->can('Loans-Settlement-list')
-            || auth()->user()->can('Salaryaddition-list') 
-            || auth()->user()->can('Other-facilities-list')
-            || auth()->user()->can('Salary-increment-list') 
-            || auth()->user()->can('Work-summary-list')
-            || auth()->user()->can('Salary-preperation-list') 
-            || auth()->user()->can('Salary-schedule-list')
-            || auth()->user()->can('Paysliplist-list'))
-
+  @if($hasPolicyPermissions)
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="policymanagement">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="policymanagement">
        Policy Management<span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-            @can('Facilities-list')
+            @if($user->can('Facilities-list'))
             <li><a class="dropdown-item" href="{{ url('RemunerationList') }}" id="facilities">Facilities</a></li>
-            @endcan
-            @can('Payrollprofile-list')
+            @endif
+            @if($user->can('Payrollprofile-list'))
             <li><a class="dropdown-item" href="{{ url('PayrollProfileList') }}" id="payrollprofile">Payroll Profile</a></li>
-            @endcan
-            @can('Loans-list')
+            @endif
+            @if($user->can('Loans-list'))
             <li><a class="dropdown-item" href="{{ url('EmployeeLoanList') }}" id="loans">Loans</a></li>
-            @endcan
-            @can('Loan Approve')
+            @endif
+            @if($user->can('Loan Approve'))
             <li><a class="dropdown-item" href="{{ url('EmployeeLoanAdmin') }}">Loan Approval</a></li>
-            @endcan
-            @can('Loans-Settlement-list')
+            @endif
+            @if($user->can('Loans-Settlement-list'))
             <li><a class="dropdown-item" href="{{ url('EmployeeLoanInstallmentList') }}" id="loanSettlement">Loan Settlement</a></li>
-            @endcan
-            @can('Salaryaddition-list')
+            @endif
+            @if($user->can('Salaryaddition-list'))
             <li><a class="dropdown-item" href="{{ url('EmployeeTermPaymentList') }}" id="SalaryAdditions">Salary Additions</a></li>
-            @endcan
-            @can('Other-facilities-list')
+            @endif
+            @if($user->can('Other-facilities-list'))
             <li><a class="dropdown-item" href="{{ url('OtherFacilityPaymentList') }}" id="OtherFacilities">Other Facilities</a></li>
-            @endcan
-            @can('Salary-increment-list')
+            @endif
+            @if($user->can('Salary-increment-list'))
             <li><a class="dropdown-item" href="{{ url('SalaryIncrementList') }}" id="SalaryIncrements">Salary Increments</a></li>
-            @endcan
-            @can('Work-summary-list')
+            @endif
+            @if($user->can('Work-summary-list'))
             <li> <a class="dropdown-item" href="{{ url('SalaryProcessSchedule') }}" id="SalaryIncrements">Salary Schedule</a></li>
-            @endcan
-            @can('Salary-preperation-list')
+            @endif
+            @if($user->can('Salary-preperation-list'))
             <li><a class="dropdown-item" href="{{ url('EmployeeWorkSummary') }}" id="Worksummary">Work Summary</a></li>
-            @endcan
-            @can('Salary-schedule-list')
+            @endif
+            @if($user->can('Salary-schedule-list'))
             <li><a class="dropdown-item" href="{{ url('EmployeePayslipList') }}" id="SalaryPreperation">Salary Preperation</a></li>
-            @endcan
-            @can('Paysliplist-list')
+            @endif
+            @if($user->can('Paysliplist-list'))
             <li><a class="dropdown-item" href="{{ url('PayslipRegistry') }}" id="PayslipList">Payslip List</a></li>
-            @endcan
+            @endif
         </ul>
   </div>
   @endif
 
-  @if(auth()->user()->can('Pay-Register-Report') 
-  || auth()->user()->can('OT-Report')
-  || auth()->user()->can('EPF-ETF-Report') 
-  || auth()->user()->can('Salary-Sheet-report')
-  || auth()->user()->can('Salary-sheet-bankslip-report') 
-  || auth()->user()->can('Salary-sheet-heldpayment-report')
-  || auth()->user()->can('Sixmonths-report') 
-  || auth()->user()->can('Addition-report')
-  || auth()->user()->can('Increment-Detail-report'))
+  @php
+    $hasReportPermissions = $user->can('Pay-Register-Report') || 
+                          $user->can('OT-Report') ||
+                          $user->can('EPF-ETF-Report') || 
+                          $user->can('Salary-Sheet-report') ||
+                          $user->can('Salary-sheet-bankslip-report') || 
+                          $user->can('Salary-sheet-heldpayment-report') ||
+                          $user->can('Sixmonths-report') || 
+                          $user->can('Addition-report') ||
+                          $user->can('Increment-Detail-report');
+  @endphp
 
+  @if($hasReportPermissions)
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="payrollreport">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="payrollreport">
       Reports <span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-            @can('Pay-Register-Report')
+            @if($user->can('Pay-Register-Report'))
              <li><a class="dropdown-item" href="{{ url('ReportPayRegister') }}" id="payregister">Pay Register</a></li>
-            @endcan
-            @can('OT-Report')
+            @endif
+            @if($user->can('OT-Report'))
              <li><a class="dropdown-item" href="{{ url('ReportEmpOvertime') }}" id="otreport">OT Report</a></li>
-            @endcan
-            @can('EPF-ETF-Report')
+            @endif
+            @if($user->can('EPF-ETF-Report'))
              <li><a class="dropdown-item" href="{{ url('ReportEpfEtf') }}" id="epfetf">EPF and ETF</a></li>
-            @endcan
-            <!--a class="dropdown-item" href="{{ url('ReportSignatureSheet') }}">Signature Sheet</a-->
-            @can('Salary-Sheet-report')
+            @endif
+            @if($user->can('Salary-Sheet-report'))
              <li><a class="dropdown-item" href="{{ url('ReportSalarySheet') }}" id="salarysheet">Salary Sheet</a></li>
-            @endcan
-            @can('Salary-sheet-bankslip-report')
+            @endif
+            @if($user->can('Salary-sheet-bankslip-report'))
              <li><a class="dropdown-item" href="{{ url('ReportSalarySheetBankSlip') }}" id="salarysheetbank">Salary Sheet - Bank Slip</a></li>
-            @endcan
-            @can('Salary-sheet-heldpayment-report')
+            @endif
+            @if($user->can('Salary-sheet-heldpayment-report'))
              <li><a class="dropdown-item" href="{{ url('ReportHeldSalaries') }}" id="salaryheld">Salary Sheet - Held Payments</a></li>
-            @endcan
-            @can('Sixmonths-report')
+            @endif
+            @if($user->can('Sixmonths-report'))
              <li><a class="dropdown-item" href="{{ url('ReportSixMonth') }}" id="sixmonth">Six Month Report</a></li>
-            @endcan
-            @can('Addition-report')
+            @endif
+            @if($user->can('Addition-report'))
              <li><a class="dropdown-item" href="{{ url('ReportAddition') }}" id="additionreport">Additions Report</a></li>
-            @endcan
-               @can('Increment-Detail-report')
+            @endif
+            @if($user->can('Increment-Detail-report'))
              <li><a class="dropdown-item" href="{{ url('salaryinrementreport') }}" id="additionreport">Salary Increment Detail Report</a></li>
-            @endcan
+            @endif
         </ul>
   </div>
   @endif
 
-  @if(auth()->user()->can('Employee-Salary-Payment-Statement') 
-            || auth()->user()->can('Employee-Incentive-Statement')
-            || auth()->user()->can('Bank-Advice-Statement') 
-            || auth()->user()->can('Pay-Summary-Statement')
-            || auth()->user()->can('Employee-Salary-Journal-Statement') 
-            || auth()->user()->can('EPF-ETF-Journal-Statement'))
+  @php
+    $hasStatementPermissions = $user->can('Employee-Salary-Payment-Statement') || 
+                             $user->can('Employee-Incentive-Statement') ||
+                             $user->can('Bank-Advice-Statement') || 
+                             $user->can('Pay-Summary-Statement') ||
+                             $user->can('Employee-Salary-Journal-Statement') || 
+                             $user->can('EPF-ETF-Journal-Statement');
+  @endphp
 
-
+  @if($hasStatementPermissions)
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="payrollststement">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="payrollststement">
       Statements <span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-          @can('Employee-Salary-Payment-Statement')
+          @if($user->can('Employee-Salary-Payment-Statement'))
            <li><a class="dropdown-item" href="{{ url('EmpSalaryPayVoucher') }}">Employee Salary (Payment Voucher)</a></li>
-          @endcan
-          @can('Employee-Incentive-Statement')
+          @endif
+          @if($user->can('Employee-Incentive-Statement'))
            <li><a class="dropdown-item" href="{{ url('EmpIncentivePayVoucher') }}">Employee Incentive (Payment Voucher)</a></li>
-          @endcan
-          @can('Bank-Advice-Statement')
+          @endif
+          @if($user->can('Bank-Advice-Statement'))
            <li><a class="dropdown-item" href="{{ url('ReportBankAdvice') }}">Bank Advice</a></li>
-          @endcan
-          @can('Pay-Summary-Statement')
+          @endif
+          @if($user->can('Pay-Summary-Statement'))
            <li><a class="dropdown-item" href="{{ url('ReportPaySummary') }}">Pay Summary</a></li>
-          @endcan
-          @can('Employee-Salary-Journal-Statement')
+          @endif
+          @if($user->can('Employee-Salary-Journal-Statement'))
            <li><a class="dropdown-item" href="{{ url('EmpSalaryJournalVoucher') }}">Employee Salary (Journal Voucher)</a></li>
-          @endcan
-          @can('EPF-ETF-Journal-Statement')
+          @endif
+          @if($user->can('EPF-ETF-Journal-Statement'))
            <li><a class="dropdown-item" href="{{ url('EmpEpfEtfJournalVoucher') }}">EPF and ETF (Journal Voucher)</a></li>
-          @endcan
+          @endif
         </ul>
   </div>
   @endif
-
-
 </div>
-
-

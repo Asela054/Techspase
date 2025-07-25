@@ -406,24 +406,24 @@
                 }
             });
 
-            // let approveby = $('#approveby');
-            // approveby.select2({
-            //     placeholder: 'Select...',
-            //     width: '100%',
-            //     allowClear: true,
-            //     parent: '#formModal',
-            //     ajax: {
-            //         url: '{{url("employee_list_sel2")}}',
-            //         dataType: 'json',
-            //         data: function(params) {
-            //             return {
-            //                 term: params.term || '',
-            //                 page: params.page || 1
-            //             }
-            //         },
-            //         cache: true
-            //     }
-            // });
+            let approveby = $('#approveby');
+            approveby.select2({
+                placeholder: 'Select...',
+                width: '100%',
+                allowClear: true,
+                parent: '#formModal',
+                ajax: {
+                    url: '{{url("employee_list_sel2")}}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1
+                        }
+                    },
+                    cache: true
+                }
+            });
 
             function load_dt(department, employee, location, from_date, to_date){
                 $('#divicestable').DataTable({
@@ -464,19 +464,7 @@
                         { data: 'leaveempname', name: 'leaveempname' },
                         { data: 'dep_name', name: 'emp_name' },
                         { data: 'leave_type', name: 'leave_type' },
-                         { 
-                            data: 'half_short', name: 'half_short', render: function(data, type, row) {
-                                if (data == 1) {
-                                    return "Full Day";
-                                } else if (data == 0.50) {
-                                    return "Half Day";
-                                } else if (data == 0.25) {
-                                    return "Short Leave";
-                                } else {
-                                    return "Unknown";
-                                }
-                            }
-                        },
+                        { data: 'half_or_short', name: 'half_or_short' },
                         { data: 'leave_from', name: 'leave_from' },
                         { data: 'leave_to', name: 'leave_to' },
                         { data: 'reson', name: 'reson' },
@@ -628,36 +616,6 @@
             }
 
         });
-
-    
-            $('#employee').change(function() {
-                var employeeId = $(this).val();
-                
-                if (employeeId) {
-                    $.ajax({
-                         url: "getDepartmentHead",
-                         method: "POST",
-                        data: { employee_id: employeeId, _token: '{{ csrf_token() }}'},
-                        success: function(response) {
-                            $('#approveby').empty().append('<option value="">Select</option>');
-                            if (response.department_head) {
-                                $('#approveby').append(
-                                    $('<option>', {
-                                        value: response.department_head.id,
-                                        text: response.department_head.name
-                                    })
-                                );
-                            }
-                        },
-                        error: function(xhr) {
-                             $('#approveby').empty().append('<option value="">Select</option>');
-                        }
-                    });
-                } else {
-                    $('#approveby').empty().append('<option value="">Select</option>');
-                }
-            });
-        
 
         $('#employee').change(function () {
             var _token = $('input[name="_token"]').val();

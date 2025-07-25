@@ -220,6 +220,10 @@
     $(document).ready(function(){
         window.scripturl = '{{ url('/scripts') }}';
     });
+
+    $.extend(true, $.fn.dataTable.defaults, {
+        pageLength: 25  // Force 25 entries per page
+    });
 </script>
 
 @yield('script')
