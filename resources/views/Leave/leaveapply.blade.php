@@ -406,24 +406,24 @@
                 }
             });
 
-            // let approveby = $('#approveby');
-            // approveby.select2({
-            //     placeholder: 'Select...',
-            //     width: '100%',
-            //     allowClear: true,
-            //     parent: '#formModal',
-            //     ajax: {
-            //         url: '{{url("employee_list_sel2")}}',
-            //         dataType: 'json',
-            //         data: function(params) {
-            //             return {
-            //                 term: params.term || '',
-            //                 page: params.page || 1
-            //             }
-            //         },
-            //         cache: true
-            //     }
-            // });
+            let approveby = $('#approveby');
+            approveby.select2({
+                placeholder: 'Select...',
+                width: '100%',
+                allowClear: true,
+                parent: '#formModal',
+                ajax: {
+                    url: '{{url("employee_list_sel2")}}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1
+                        }
+                    },
+                    cache: true
+                }
+            });
 
             function load_dt(department, employee, location, from_date, to_date){
                 $('#divicestable').DataTable({

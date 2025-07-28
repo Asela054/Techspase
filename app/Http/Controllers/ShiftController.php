@@ -26,7 +26,7 @@ class ShiftController extends Controller
     public function index()
     {
         $shifttype= ShiftType::orderBy('id', 'asc')->get();
-        $employee=Employee::orderBy('id', 'desc')->get();
+        // $employee=Employee::orderBy('id', 'desc')->get();
         $branch=Branch::orderBy('id', 'desc')->get();
 
     //   dd($shift);
