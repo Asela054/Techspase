@@ -1,169 +1,158 @@
-
 <div class="row nowrap" style="padding-top: 5px;padding-bottom: 5px;">
 
-  @if(auth()->user()->can('attendance-sync')
-  || auth()->user()->can('attendance-incomplete-data-list')
-  || auth()->user()->can('attendance-list')
-  || auth()->user()->can('attendance-create')
-  || auth()->user()->can('attendance-edit')
-  || auth()->user()->can('attendance-delete')
-  || auth()->user()->can('attendance-approve')
-  || auth()->user()->can('late-attendance-create')
-  || auth()->user()->can('late-attendance-approve')
-  || auth()->user()->can('late-attendance-list')
-  || auth()->user()->can('attendance-incomplete-data-list')
-  || auth()->user()->can('ot-approve')
-  || auth()->user()->can('ot-list')
-  || auth()->user()->can('finger-print-device-list')
-  || auth()->user()->can('finger-print-user-list')
-  || auth()->user()->can('attendance-device-clear')
-  )
+  @php
+    $user = auth()->user();
+    $hasAttendancePermissions = $user->can('attendance-sync') || $user->can('attendance-incomplete-data-list') || 
+                               $user->can('attendance-list') || $user->can('attendance-create') || 
+                               $user->can('attendance-edit') || $user->can('attendance-delete') || 
+                               $user->can('attendance-approve') || $user->can('late-attendance-create') || 
+                               $user->can('late-attendance-approve') || $user->can('late-attendance-list') || 
+                               $user->can('attendance-incomplete-data-list') || $user->can('ot-approve') || 
+                               $user->can('ot-list') || $user->can('finger-print-device-list') || 
+                               $user->can('finger-print-user-list') || $user->can('attendance-device-clear');
+  @endphp
+
+  @if($hasAttendancePermissions)
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="attendantmaster">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="attendantmaster">
       Attendance Information<span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-          @can('finger-print-device-list')
+          @if($user->can('finger-print-device-list'))
           <li><a class="dropdown-item" href="{{ route('FingerprintDevice')}}">Fingerprint Device</a></li>
-        @endcan
-        @can('finger-print-user-list')
+          @endif
+          @if($user->can('finger-print-user-list'))
           <li><a class="dropdown-item" href="{{ route('FingerprintUser')}}">Fingerprint User</a></li>
-        @endcan
-        @can('attendance-device-clear-list')
+          @endif
+          @if($user->can('attendance-device-clear-list'))
           <li><a class="dropdown-item" href="{{ route('AttendanceDeviceClear')}}">Attendance Device Clear</a></li>
-        @endcan
+          @endif
 
-          @can('attendance-sync')
+          @if($user->can('attendance-sync'))
             <li><a class="dropdown-item" href="{{ route('Attendance')}}">Attendance Sync</a></li>
-          @endcan
-          @can('attendance-create')
+          @endif
+          @if($user->can('attendance-create'))
             <li><a class="dropdown-item" href="{{ route('AttendanceEdit')}}">Attendance Add</a></li>
-          @endcan
-          @can('attendance-edit')
+          @endif
+          @if($user->can('attendance-edit'))
             <li><a class="dropdown-item" href="{{ route('AttendanceEditBulk')}}">Attendance Edit</a></li>
-          @endcan
-          @can('late-attendance-create')
+          @endif
+          @if($user->can('late-attendance-create'))
             <li><a class="dropdown-item" href="{{ route('late_attendance_by_time')}}">Late Attendance Mark</a></li>
-          @endcan
-          @can('late-attendance-approve')
+          @endif
+          @if($user->can('late-attendance-approve'))
             <li><a class="dropdown-item" href="{{ route('late_attendance_by_time_approve')}}">Late Attendance Approve</a></li>
-          @endcan
-          @can('late-attendance-list')
+          @endif
+          @if($user->can('late-attendance-list'))
             <li><a class="dropdown-item" href="{{ route('late_attendances_all')}}">Late Attendances</a></li>
-          @endcan
-          @can('Late-minites-manual-mark-list')
+          @endif
+          @if($user->can('Late-minites-manual-mark-list'))
           <li><a class="dropdown-item" href="{{ route('lateminitesmanualmark')}}">Late Attendance Auto Mark</a></li>
-         @endcan
-          @can('attendance-incomplete-data-list')
+          @endif
+          @if($user->can('attendance-incomplete-data-list'))
             <li><a class="dropdown-item" href="{{ route('incomplete_attendances')}}">Incomplete Attendances</a></li>
-          @endcan
-          @can('Nopay-attendance-list')
+          @endif
+          @if($user->can('Nopay-attendance-list'))
           <li><a class="dropdown-item" href="{{ route('nopay_attendances')}}">Nopay Attendances</a></li>
-        @endcan
-          @can('ot-approve')
+          @endif
+          @if($user->can('ot-approve'))
             <li><a class="dropdown-item" href="{{ route('ot_approve')}}">OT Approve</a></li>
-          @endcan
-          @can('ot-list')
+          @endif
+          @if($user->can('ot-list'))
             <li><a class="dropdown-item" href="{{ route('ot_approved')}}">Approved OT</a></li>
-          @endcan
-          @can('attendance-approve')
+          @endif
+          @if($user->can('attendance-approve'))
             <li><a class="dropdown-item" href="{{ route('AttendanceApprovel')}}">Attendance Approval</a></li>
-          @endcan
-          @can('Lateminites-Approvel-list')
+          @endif
+          @if($user->can('Lateminites-Approvel-list'))
           <li><a class="dropdown-item" href="{{ route('lateminitesapprovel')}}">Late Minites Approval</a></li>
-          @endcan
-          @can('MealAllowanceApprove-list')
+          @endif
+          @if($user->can('MealAllowanceApprove-list'))
           <li><a class="dropdown-item" href="{{ route('mealallowanceapproval')}}">Salary Adjustments Approval</a></li>
-          @endcan
-          @can('Holiday-DeductionApprove-list')
+          @endif
+          @if($user->can('Holiday-DeductionApprove-list'))
           <li><a class="dropdown-item" href="{{ route('holidaydeductionapproval')}}">Leave Deduction Approval</a></li>
-          @endcan
-          @can('Absent-Nopay-list')
+          @endif
+          @if($user->can('Absent-Nopay-list'))
           <li><a class="dropdown-item" href="{{ route('absentnopay')}}">Absent Noapy Apply</a></li>
-          @endcan
+          @endif
         </ul>
   </div>
   @endif
 
-  @if(auth()->user()->can('leave-list')
-  || auth()->user()->can('leave-type-list')
-  || auth()->user()->can('leave-approve')
-  || auth()->user()->can('holiday-list')
-  || auth()->user()->can('IgnoreDay-list')
-  || auth()->user()->can('Coverup-list')
-  || auth()->user()->can('Holiday-Deduction-list')
-  )
+  @php
+    $hasLeavePermissions = $user->can('leave-list') || $user->can('leave-type-list') || 
+                          $user->can('leave-approve') || $user->can('holiday-list') || 
+                          $user->can('IgnoreDay-list') || $user->can('Coverup-list') || 
+                          $user->can('Holiday-Deduction-list');
+  @endphp
+
+  @if($hasLeavePermissions)
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="leavemaster">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="leavemaster">
         Leave Information <span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-          @can('leave-list')
+          @if($user->can('leave-list'))
             <li><a class="dropdown-item" href="{{ route('LeaveApply')}}">Leave Apply</a></li>
-          @endcan
-          @can('leave-type-list')
+          @endif
+          @if($user->can('leave-type-list'))
             <li><a class="dropdown-item" href="{{ route('LeaveType')}}">Leave Type</a></li>
-          @endcan
-          @can('leave-approve')
+          @endif
+          @if($user->can('leave-approve'))
             <li><a class="dropdown-item" href="{{ route('LeaveApprovel')}}">Leave Approvals</a></li>
-          @endcan
-          @can('holiday-list')
+          @endif
+          @if($user->can('holiday-list'))
             <li><a class="dropdown-item" href="{{ route('Holiday')}}">Holiday</a></li>
-          @endcan
-          {{-- @can('holiday-list')
-            <li><a class="dropdown-item" href="{{ route('HolidayCalendar')}}">Holiday Calendar</a></li>
-          @endcan --}}
-          @can('IgnoreDay-list')
+          @endif
+          @if($user->can('IgnoreDay-list'))
             <li><a class="dropdown-item" href="{{ route('IgnoreDay')}}">Ignore Days</a></li>
-          @endcan
-          @can('Coverup-list')
+          @endif
+          @if($user->can('Coverup-list'))
             <li><a class="dropdown-item" href="{{ route('Coverup')}}">CoverUp Details</a></li>
-          @endcan
-          @can('Coverup-Approvel')
+          @endif
+          @if($user->can('Coverup-Approvel'))
           <li><a class="dropdown-item" href="{{ route('coverupnopay')}}">CoverUp Nopay Approvel</a></li>
-        @endcan
-          @can('Holiday-Deduction-list')
+          @endif
+          @if($user->can('Holiday-Deduction-list'))
             <li><a class="dropdown-item" href="{{ route('HolidayDeduction')}}">Holiday Deduction</a></li>
-          @endcan
+          @endif
         </ul>
   </div>
   @endif
 
+  @php
+    $hasJobPermissions = $user->can('Job-Location-list') || 
+                        $user->can('Job-Allocation-list') || 
+                        $user->can('Job-Attendance-list');
+  @endphp
 
-  @if(auth()->user()->can('Job-Location-list')
-  || auth()->user()->can('Job-Allocation-list')
-  || auth()->user()->can('Job-Attendance-list'))
+  @if($hasJobPermissions)
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="jobmanegment">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="jobmanegment">
       Job Management <span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-          @can('Job-Location-list')
+          @if($user->can('Job-Location-list'))
             <li><a class="dropdown-item" href="{{ route('joblocations')}}">Job Location</a></li>
-            @endcan
-            @can('Job-Allocation-list')
+          @endif
+          @if($user->can('Job-Allocation-list'))
             <li><a class="dropdown-item" href="{{ route('joballocation')}}">Job Allocation</a></li>
-            @endcan
-            @can('Job-Attendance-list')
+          @endif
+          @if($user->can('Job-Attendance-list'))
             <li><a class="dropdown-item" href="{{ route('jobattendance')}}">Attendance</a></li>
-            @endcan
+          @endif
         </ul>
   </div>
   @endif
 
-
   <div class="dropdown">
-    <a  role="button" data-toggle="dropdown" class="btn navbtncolor" data-target="#" href="#" id="gatepassmanagement">
+    <a role="button" data-toggle="dropdown" class="btn navbtncolor" href="#" id="gatepassmanagement">
       Gate pass Management <span class="caret"></span></a>
         <ul class="dropdown-menu multi-level dropdownmenucolor" role="menu" aria-labelledby="dropdownMenu">
-          
-            <li><a class="dropdown-item" href="{{ route('gatepass')}}">Gate pass</a></li>
-           
-            <li><a class="dropdown-item" href="{{ route('gatepassapprove')}}">Gate pass Approve</a></li>
+          <li><a class="dropdown-item" href="{{ route('gatepass')}}">Gate pass</a></li>
+          <li><a class="dropdown-item" href="{{ route('gatepassapprove')}}">Gate pass Approve</a></li>
         </ul>
   </div>
   
-   @can('daily-summary-list')
+  @if($user->can('daily-summary-list'))
   <a role="button" class="btn navbtncolor" href="{{ route('dailyhrsummary') }}" id="hrsummary">Daily HR Summary<span class="caret"></span></a>
-  @endcan
-
-    </div>
-
-
+  @endif
+</div>

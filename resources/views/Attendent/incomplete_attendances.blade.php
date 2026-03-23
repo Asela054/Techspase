@@ -166,7 +166,7 @@
             let from_date = $('#from_date').val();
             let to_date = $('#to_date').val();
 
-            load_dt('', '', '', from_date, to_date);
+            // load_dt('', '', '', from_date, to_date);
             
 
             document.getElementById('btn-clear').addEventListener('click', function() {
@@ -303,6 +303,66 @@
                     }, 'fast');
                 }
 
+            });
+
+             $(document).on('click', '#btn_updatesttendace', function() {
+                var updatedRecords = [];
+                
+                $('#attendance_report_table tbody tr').each(function() {
+                    // Skip rows that don't have the attendance checkbox
+                    if ($(this).find('.checkbox_attendance').length === 0) return;
+
+                    var timeIn = $(this).find('.time_in');
+                    var timeOut = $(this).find('.time_out');
+
+                    var originalTimeIn = timeIn.data('timestamp');
+                    var originalTimeOut = timeOut.data('timestamp');
+
+                    var currentTimeIn = timeIn.val();
+                    var currentTimeOut = timeOut.val();
+
+                    // Check if both timestamps are filled and either one has changed
+                    if (currentTimeIn && currentTimeOut && 
+                        (currentTimeIn !== originalTimeIn || currentTimeOut !== originalTimeOut)) {
+                        
+                        var empid = $(this).find('.checkbox_attendance').data('empid');
+                        var date = $(this).find('.checkbox_attendance').data('date');
+
+                        updatedRecords.push({
+                            emp_id: empid,
+                            date: date,
+                            timestamp: currentTimeIn,
+                            lasttimestamp: currentTimeOut
+                        });
+                    }
+                });
+
+                if (updatedRecords.length === 0) {
+                    alert('No changes detected or both timestamp fields are not filled!');
+                    return;
+                }
+
+                $.ajax({
+                    url: '{{ route("update_incomplete_attendace") }}',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        updatedrecords: updatedRecords
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            console.error('Server error:', response.message);
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                        alert('AJAX Error: ' + error);
+                    }
+                });
             });
 
         });

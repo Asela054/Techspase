@@ -1,16 +1,17 @@
-
 <div class="row nowrap" style="padding-top: 5px;padding-bottom: 5px;">
+  @php
+    $user = auth()->user();
+    $hasAdminPermissions = $user->can('user-list') || $user->can('role-list');
+  @endphp
 
-  @if(auth()->user()->can('user-list') || auth()->user()->can('role-list'))
+  @if($hasAdminPermissions)
       <div class="dropdown">
-        @can('user-list')
+        @if($user->can('user-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('users.index') }}" id="users_link">Users <span class="caret"></span></a>
-        @endcan
-        @can('role-list')
+        @endif
+        @if($user->can('role-list'))
         <a role="button" class="btn navbtncolor" href="{{ route('roles.index') }}" id="roles_link">Roles <span class="caret"></span></a>
-        @endcan
+        @endif
       </div>
   @endif
-    </div>
-
-
+</div>

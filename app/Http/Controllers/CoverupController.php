@@ -31,7 +31,7 @@ class CoverupController extends Controller
         if (!$permission) {
             abort(403);
         }
-        $employee = Employee::orderBy('id', 'desc')->get();
+        // $employee = Employee::orderBy('id', 'desc')->get();
 
         return view('Leave.coverup_details', compact('employee'));
     }

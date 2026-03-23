@@ -26,7 +26,7 @@ class EmployeeShiftController extends Controller
             return response()->json(['error' => 'UnAuthorized'], 401);
         }
 
-        $employees = DB::table('employees')->select('employees.*')->get();
+        // $employees = DB::table('employees')->select('employees.*')->get();
         $shifttypes = DB::table('shift_types')->select('shift_types.*')->get();
 
         return view('EmployeeShift.employeeshift',compact('shifttypes','employees'));

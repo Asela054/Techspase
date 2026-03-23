@@ -1,9 +1,4 @@
-<div class="sidebar"  id="sidebar">
-    {{-- <div class="logo-details">
-      <i class="bx bxl-c-plus-plus icon"></i>
-      <div class="logo_name">CodingLab</div>
-      <i class="bx bx-menu" id="btn"></i>
-    </div> --}}
+<div class="sidebar" id="sidebar">
     <ul class="nav-list">
       <li>
         <a href="{{ url('/home') }}" id="dashboard_link">
@@ -13,11 +8,16 @@
         <span class="tooltip">Dashboard</span>
       </li>
 
-      @if(auth()->user()->can('location-list') 
-      || auth()->user()->can('company-list') 
-      || auth()->user()->can('bank-list') 
-      || auth()->user()->can('work-category-list') 
-      || auth()->user()->can('month-work-hours-list'))
+      @php
+        $user = auth()->user();
+        $hasOrganizationPermissions = $user->can('location-list') || 
+                                    $user->can('company-list') || 
+                                    $user->can('bank-list') || 
+                                    $user->can('work-category-list') || 
+                                    $user->can('month-work-hours-list');
+      @endphp
+
+      @if($hasOrganizationPermissions)
       <li>
         <a href="{{ url('/corporatedashboard') }}" id="organization_menu_link">
           <i id="organization_menu_link_icon" class="flaticon-381-folder-9"></i>
@@ -27,15 +27,19 @@
       </li>
       @endif
 
-      @if(auth()->user()->can('job-title-list')
-            || auth()->user()->can('pay-grade-list')
-            || auth()->user()->can('job-category-list')
-            || auth()->user()->can('job-employment-status-list')
-            || auth()->user()->can('skill-list')
-            || auth()->user()->can('employee-list')
-            || auth()->user()->can('employee-select')
-            || auth()->user()->can('pe-task-list')
-            || auth()->user()->can('allowance-amount-list'))
+      @php
+        $hasEmployeePermissions = $user->can('job-title-list') ||
+                                $user->can('pay-grade-list') ||
+                                $user->can('job-category-list') ||
+                                $user->can('job-employment-status-list') ||
+                                $user->can('skill-list') ||
+                                $user->can('employee-list') ||
+                                $user->can('employee-select') ||
+                                $user->can('pe-task-list') ||
+                                $user->can('allowance-amount-list');
+      @endphp
+
+      @if($hasEmployeePermissions)
       <li>
         <a href="{{ url('/employeemanagementdashboard') }}" id="employee_menu_link">
           <i id="employee_menu_link_icon" class="flaticon-381-user-8"></i>
@@ -45,26 +49,30 @@
       </li>
       @endif
 
-      @if(auth()->user()->can('attendance-sync')
-            || auth()->user()->can('attendance-incomplete-data-list')
-            || auth()->user()->can('attendance-list')
-            || auth()->user()->can('attendance-create')
-            || auth()->user()->can('attendance-edit')
-            || auth()->user()->can('attendance-delete')
-            || auth()->user()->can('attendance-approve')
-            || auth()->user()->can('late-attendance-create')
-            || auth()->user()->can('late-attendance-approve')
-            || auth()->user()->can('late-attendance-list')
-            || auth()->user()->can('attendance-incomplete-data-list')
-            || auth()->user()->can('ot-approve')
-            || auth()->user()->can('ot-list')
-            || auth()->user()->can('finger-print-device-list')
-            || auth()->user()->can('finger-print-user-list')
-            || auth()->user()->can('attendance-device-clear')
-            || auth()->user()->can('leave-list')
-            || auth()->user()->can('leave-type-list')
-            || auth()->user()->can('leave-approve')
-            || auth()->user()->can('holiday-list'))
+      @php
+        $hasAttendanceLeavePermissions = $user->can('attendance-sync') ||
+                                       $user->can('attendance-incomplete-data-list') ||
+                                       $user->can('attendance-list') ||
+                                       $user->can('attendance-create') ||
+                                       $user->can('attendance-edit') ||
+                                       $user->can('attendance-delete') ||
+                                       $user->can('attendance-approve') ||
+                                       $user->can('late-attendance-create') ||
+                                       $user->can('late-attendance-approve') ||
+                                       $user->can('late-attendance-list') ||
+                                       $user->can('attendance-incomplete-data-list') ||
+                                       $user->can('ot-approve') ||
+                                       $user->can('ot-list') ||
+                                       $user->can('finger-print-device-list') ||
+                                       $user->can('finger-print-user-list') ||
+                                       $user->can('attendance-device-clear') ||
+                                       $user->can('leave-list') ||
+                                       $user->can('leave-type-list') ||
+                                       $user->can('leave-approve') ||
+                                       $user->can('holiday-list');
+      @endphp
+
+      @if($hasAttendanceLeavePermissions)
       <li>
         <a href="{{ url('/attendenceleavedashboard') }}" id="attendant_menu_link">
           <i id="attendant_menu_link_icon" class="flaticon-381-id-card"></i>
@@ -74,9 +82,13 @@
       </li>
       @endif
 
-      @if(auth()->user()->can('shift-list')
-            || auth()->user()->can('work-shift-list')
-            || auth()->user()->can('additional-shift-list'))
+      @php
+        $hasShiftPermissions = $user->can('shift-list') ||
+                             $user->can('work-shift-list') ||
+                             $user->can('additional-shift-list');
+      @endphp
+
+      @if($hasShiftPermissions)
       <li>
         <a href="{{ url('/shiftmanagementdashboard') }}" id="shift_menu_link">
           <i id="shift_menu_link_icon" class="flaticon-381-target"></i>
@@ -86,14 +98,18 @@
       </li>
       @endif
 
-      @if(auth()->user()->can('employee-report')
-            || auth()->user()->can('attendance-report')
-            || auth()->user()->can('late-attendance-report')
-            || auth()->user()->can('leave-report')
-            || auth()->user()->can('employee-bank-report')
-            || auth()->user()->can('leave-balance-report')
-            || auth()->user()->can('ot-report')
-            || auth()->user()->can('no-pay-report'))
+      @php
+        $hasReportPermissions = $user->can('employee-report') ||
+                              $user->can('attendance-report') ||
+                              $user->can('late-attendance-report') ||
+                              $user->can('leave-report') ||
+                              $user->can('employee-bank-report') ||
+                              $user->can('leave-balance-report') ||
+                              $user->can('ot-report') ||
+                              $user->can('no-pay-report');
+      @endphp
+
+      @if($hasReportPermissions)
       <li>
         <a href="{{ url('/reportdashboard') }}" id="report_menu_link">
           <i id="report_menu_link_icon" class="flaticon-381-file-2"></i>
@@ -103,32 +119,35 @@
       </li>
       @endif
 
-      @if(auth()->user()->can('Facilities-list') 
-        || auth()->user()->can('Payrollprofile-list')
-        || auth()->user()->can('Loans-list') 
-        || auth()->user()->can('Loans-Settlement-list')
-        || auth()->user()->can('Salaryaddition-list') 
-        || auth()->user()->can('Other-facilities-list')
-        || auth()->user()->can('Salary-increment-list') 
-        || auth()->user()->can('Work-summary-list')
-        || auth()->user()->can('Salary-preperation-list') 
-        || auth()->user()->can('Salary-schedule-list')
-        || auth()->user()->can('Paysliplist-list')
-        || auth()->user()->can('Pay-Register-Report') 
-        || auth()->user()->can('OT-Report')
-        || auth()->user()->can('EPF-ETF-Report') 
-        || auth()->user()->can('Salary-Sheet-report')
-        || auth()->user()->can('Salary-sheet-bankslip-report') 
-        || auth()->user()->can('Salary-sheet-heldpayment-report')
-        || auth()->user()->can('Sixmonths-report') 
-        || auth()->user()->can('Addition-report')
-        ||auth()->user()->can('Employee-Salary-Payment-Statement') 
-        || auth()->user()->can('Employee-Incentive-Statement')
-        || auth()->user()->can('Bank-Advice-Statement') 
-        || auth()->user()->can('Pay-Summary-Statement')
-        || auth()->user()->can('Employee-Salary-Journal-Statement') 
-        || auth()->user()->can('EPF-ETF-Journal-Statement'))
-      
+      @php
+        $hasPayrollPermissions = $user->can('Facilities-list') ||
+                                $user->can('Payrollprofile-list') ||
+                                $user->can('Loans-list') ||
+                                $user->can('Loans-Settlement-list') ||
+                                $user->can('Salaryaddition-list') ||
+                                $user->can('Other-facilities-list') ||
+                                $user->can('Salary-increment-list') ||
+                                $user->can('Work-summary-list') ||
+                                $user->can('Salary-preperation-list') ||
+                                $user->can('Salary-schedule-list') ||
+                                $user->can('Paysliplist-list') ||
+                                $user->can('Pay-Register-Report') ||
+                                $user->can('OT-Report') ||
+                                $user->can('EPF-ETF-Report') ||
+                                $user->can('Salary-Sheet-report') ||
+                                $user->can('Salary-sheet-bankslip-report') ||
+                                $user->can('Salary-sheet-heldpayment-report') ||
+                                $user->can('Sixmonths-report') ||
+                                $user->can('Addition-report') ||
+                                $user->can('Employee-Salary-Payment-Statement') ||
+                                $user->can('Employee-Incentive-Statement') ||
+                                $user->can('Bank-Advice-Statement') ||
+                                $user->can('Pay-Summary-Statement') ||
+                                $user->can('Employee-Salary-Journal-Statement') ||
+                                $user->can('EPF-ETF-Journal-Statement');
+      @endphp
+
+      @if($hasPayrollPermissions)
       <li>
         <a href="{{ url('/payrolldashboard') }}" id="payrollmenu">
           <i class="flaticon-381-user-8" id="payrollmenu_icon"></i>
@@ -138,8 +157,12 @@
       </li>
       @endif
 
-      @if(auth()->user()->can('Functional-list')
-          || auth()->user()->can('Behavioral-list'))
+      @php
+        $hasKPIPermissions = $user->can('Functional-list') ||
+                            $user->can('Behavioral-list');
+      @endphp
+
+      @if($hasKPIPermissions)
       <li>
         <a href="{{ url('/functionalmanagementdashboard') }}" id="functional_menu_link">
           <i id="functional_menu_link_icon" class="flaticon-381-user-1"></i>
@@ -149,7 +172,7 @@
       </li>
       @endif
       
-    @if(auth()->user()->can('user-account-summery-list'))
+      @if($user->can('user-account-summery-list'))
       <li>
         <a href="{{ url('/useraccountsummery') }}" id="user_information_menu_link">
           <i id="user_information_menu_link_icon" class="flaticon-381-user-1"></i>
@@ -159,7 +182,11 @@
       </li>
       @endif
 
-      @if(auth()->user()->can('user-list') || auth()->user()->can('role-list'))
+      @php
+        $hasAdminPermissions = $user->can('user-list') || $user->can('role-list');
+      @endphp
+
+      @if($hasAdminPermissions)
       <li>
           <a href="{{ url('/administratordashboard') }}" id="administrator_menu_link">
               <i id="administrator_menu_link_icon" class="flaticon-381-user-4"></i>
@@ -167,7 +194,6 @@
           </a>
           <span class="tooltip">Administrator</span>
         </li>
-      
       @endif
     </ul>
   </div>
